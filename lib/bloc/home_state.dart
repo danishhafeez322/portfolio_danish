@@ -16,14 +16,14 @@ class AppBarHeadersIndexChanged extends HomeState {
   List<Object?> get props => [index];
 }
 
-// class AppBarHeadersAxisChanged extends HomeState {
-//   final AppBarHeadersAxis headersAxis;
-//
-//   AppBarHeadersAxisChanged(this.headersAxis);
-//
-//   @override
-//   List<Object?> get props => [headersAxis];
-// }
+class AppBarHeadersAxisChanged extends HomeState {
+  final AppBarHeadersAxis headersAxis;
+
+  AppBarHeadersAxisChanged(this.headersAxis);
+
+  @override
+  List<Object?> get props => [headersAxis];
+}
 
 class AppBarHeadersColorChangedByIndex extends HomeState {
   final int index;

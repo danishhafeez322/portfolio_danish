@@ -14,14 +14,14 @@ class ChangeAppBarHeadersIndex extends HomeEvent {
   List<Object?> get props => [index];
 }
 
-// class ChangeAppBarHeadersAxis extends HomeEvent {
-//   final AppBarHeadersAxis headersAxis;
-//
-//   ChangeAppBarHeadersAxis(this.headersAxis);
-//
-//   @override
-//   List<Object?> get props => [headersAxis];
-// }
+class ChangeAppBarHeadersAxis extends HomeEvent {
+  final AppBarHeadersAxis headersAxis;
+
+  ChangeAppBarHeadersAxis(this.headersAxis);
+
+  @override
+  List<Object?> get props => [headersAxis];
+}
 
 class ChangeAppBarHeadersColorByColor extends HomeEvent {
   final int index;
