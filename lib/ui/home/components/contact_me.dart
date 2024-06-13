@@ -29,9 +29,10 @@ class _ContactMeState extends State<ContactMe> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Contact with me",
+                "Let's Connect!",
                 style: textTheme.displaySmall!.copyWith(
                   color: PortfolioAppTheme.nameColor,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               SizedBox(height: context.height * 0.05),

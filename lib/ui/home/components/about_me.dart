@@ -61,20 +61,25 @@ class AboutMe extends StatelessWidget {
                 ),
               ),
               SizedBox(height: context.height * 0.02),
-              ElevatedButton.icon(
-                onPressed: () {
-                  html.window.open(AppStrings.resume, "pdf");
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: PortfolioAppTheme.white,
-                ),
-                icon: const Icon(Icons.download,
-                    color: PortfolioAppTheme.nameColor),
-                label: Text(
-                  "Download Resume",
-                  style: textTheme.titleMedium!.copyWith(
-                    color: PortfolioAppTheme.greyButtonColor,
-                    fontWeight: FontWeight.bold,
+              SizedBox(
+                height: context.height * 0.042,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    html.window.open(AppStrings.resume, "pdf");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: PortfolioAppTheme.white,
+                  ),
+                  icon: const Icon(Icons.download,
+                      color: PortfolioAppTheme.nameColor),
+                  label: FittedBox(
+                    child: Text(
+                      "Download Resume",
+                      style: textTheme.titleMedium!.copyWith(
+                        color: PortfolioAppTheme.greyButtonColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_danish/bloc/home_bloc.dart';
 import 'package:portfolio_danish/ui/home/components/home_app_bar.dart';
+import 'package:portfolio_danish/utils/app_enum.dart';
 import 'package:portfolio_danish/utils/app_extentions.dart';
 import 'package:portfolio_danish/utils/app_theme.dart';
+import 'package:portfolio_danish/widgets/vertical_headers.dart';
 
 import 'components/about_me.dart';
 import 'components/contact_me.dart';
@@ -116,8 +118,30 @@ class _HomeBodyState extends State<HomeBody> {
               ),
             ),
           ),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              return AnimatedCrossFade(
+                sizeCurve: Curves.bounceInOut,
+                alignment: Alignment.topCenter,
+                crossFadeState: _getCrossFadeState(context),
+                firstChild: Container(
+                  color: PortfolioAppTheme.greyButtonColor,
+                  child: const VerticalHeaders(),
+                ),
+                secondChild: Container(),
+                duration: const Duration(milliseconds: 200),
+              );
+            },
+          )
         ],
       ),
     );
+  }
+
+  CrossFadeState _getCrossFadeState(BuildContext context) {
+    final currentHeaderAxis = context.read<HomeBloc>().appBarHeaderAxis;
+    return currentHeaderAxis == AppBarHeadersAxis.horizontal
+        ? CrossFadeState.showSecond
+        : CrossFadeState.showFirst;
   }
 }

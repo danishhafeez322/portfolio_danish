@@ -8,44 +8,73 @@ class FeatureProjects extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imgList = [
+      'assets/imgs/fitness_challenge.png',
+      'assets/imgs/snaptik_video_downloader.jpg',
+      'assets/imgs/fitness_challenge.png'
+    ];
     final textTheme = Theme.of(context).textTheme;
-    return Container(
-      height: context.height * 0.7,
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.width * 0.05),
-      child: GridView.builder(
-        itemCount: 3,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 10,
-        ),
-        itemBuilder: (context, __) => Container(
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Featured Projects',
+            style: textTheme.displaySmall!.copyWith(
+              color: PortfolioAppTheme.nameColor,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-          child: Column(
-            children: [
-              Image.asset(
-                width: context.width * 0.3,
-                "assets/imgs/fitness_challenge.png",
-                fit: BoxFit.cover,
+          SizedBox(height: context.height * 0.03),
+          GridView.builder(
+            itemCount: 3,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: context.width > 456 ? 3 : 1,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 10,
+            ),
+            itemBuilder: (context, index) => Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
               ),
-              SizedBox(height: context.height * 0.005),
-              Text("Fitness Challenge App", style: textTheme.titleSmall),
-              SizedBox(height: context.height * 0.005),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    foregroundColor: PortfolioAppTheme.nameColor),
-                onPressed: () {},
-                child: const Text("Github Link"),
-              )
-            ],
-          ),
-        ),
+              child: Column(
+                children: [
+                  Flexible(
+                    flex: 2,
+                    fit: FlexFit.tight,
+                    child: Image.asset(
+                      width: double.infinity,
+                      imgList[index],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(height: context.height * 0.005),
+                  FittedBox(
+                    child: Text("Fitness Challenge App",
+                        style: textTheme.titleSmall),
+                  ),
+                  SizedBox(height: context.height * 0.005),
+                  SizedBox(
+                    height: context.height * 0.037,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          foregroundColor: PortfolioAppTheme.nameColor),
+                      onPressed: () {},
+                      child: const FittedBox(
+                        child: Text("Github Link"),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
