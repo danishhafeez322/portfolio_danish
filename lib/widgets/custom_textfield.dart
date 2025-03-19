@@ -29,30 +29,26 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return SizedBox(
-      width: 0.23 * context.width,
-      child: TextFormField(
-        validator: validator,
-        maxLines: maxLines,
-        keyboardType: textInputType,
-        obscureText: obscureText,
-        controller: controller,
-        decoration: InputDecoration(
-          suffix: suffixButton,
-          hintText: hintText,
-          hintStyle: textTheme.titleSmall,
-          prefixIcon: prefix,
-          suffixIcon: suffix,
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          contentPadding: EdgeInsets.symmetric(
-              vertical: 0.025 * context.height,
-              horizontal: 0.02 * context.width),
-          filled: true,
-          fillColor: Colors.grey.shade200,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: BorderSide.none,
-          ),
+    return TextFormField(
+      validator: validator,
+      maxLines: maxLines,
+      keyboardType: textInputType,
+      obscureText: obscureText,
+      controller: controller,
+      decoration: InputDecoration(
+        suffix: suffixButton,
+        hintText: hintText,
+        hintStyle: textTheme.titleSmall,
+        prefixIcon: prefix,
+        suffixIcon: suffix,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        contentPadding: EdgeInsets.symmetric(
+            vertical: 0.025 * context.height, horizontal: 0.02 * context.width),
+        filled: true,
+        fillColor: Colors.grey.shade200,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: BorderSide.none,
         ),
       ),
     );

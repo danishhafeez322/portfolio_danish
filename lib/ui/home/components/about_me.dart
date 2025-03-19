@@ -15,7 +15,7 @@ class AboutMe extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        SizedBox(width: context.width * 0.09),
+        SizedBox(width: context.width * 0.06),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,35 +30,36 @@ class AboutMe extends StatelessWidget {
               SizedBox(height: context.height * 0.01),
               Text(
                 "Danish Hafeez",
-                style: textTheme.displayLarge!.copyWith(
-                    color: PortfolioAppTheme.nameColor,
-                    fontWeight: FontWeight.w700),
+                style: context.width > 456
+                    ? textTheme.displayLarge!.copyWith(
+                        color: PortfolioAppTheme.nameColor,
+                        fontWeight: FontWeight.w700)
+                    : textTheme.displayMedium!.copyWith(
+                        color: PortfolioAppTheme.nameColor,
+                        fontWeight: FontWeight.w700),
               ),
               SizedBox(height: context.height * 0.01),
-              SizedBox(
-                height: context.height * 0.035,
-                child: AnimatedTextKit(
-                  repeatForever: true,
-                  animatedTexts: [
-                    TyperAnimatedText(
-                      "A Mobile App Developer",
-                      textStyle: textTheme.titleMedium!
-                          .copyWith(fontWeight: FontWeight.w400),
-                      speed: const Duration(milliseconds: 120),
-                    ),
-                    TyperAnimatedText(
-                      "A UI/UX Designer",
-                      textStyle: textTheme.titleMedium,
-                      speed: const Duration(milliseconds: 100),
-                    ),
-                    TyperAnimatedText(
-                      "A Web App Developer",
-                      textStyle: textTheme.titleMedium,
-                      speed: const Duration(milliseconds: 100),
-                    ),
-                  ],
-                  isRepeatingAnimation: true,
-                ),
+              AnimatedTextKit(
+                repeatForever: true,
+                animatedTexts: [
+                  TyperAnimatedText(
+                    "A Mobile App Developer",
+                    textStyle: textTheme.titleMedium!
+                        .copyWith(fontWeight: FontWeight.w400),
+                    speed: const Duration(milliseconds: 120),
+                  ),
+                  TyperAnimatedText(
+                    "A UI/UX Designer",
+                    textStyle: textTheme.titleMedium,
+                    speed: const Duration(milliseconds: 100),
+                  ),
+                  TyperAnimatedText(
+                    "A Web App Developer",
+                    textStyle: textTheme.titleMedium,
+                    speed: const Duration(milliseconds: 100),
+                  ),
+                ],
+                isRepeatingAnimation: true,
               ),
               SizedBox(height: context.height * 0.02),
               SizedBox(
@@ -90,7 +91,7 @@ class AboutMe extends StatelessWidget {
                   width: context.width * 0.6,
                   child: context.width > 550
                       ? Text(
-                          "I'm a constant learner,+2 years experience, staying up-to-date with the latest advancements in the Flutter ecosystem. This ensures I can deliver innovative and future-proof app solutions.",
+                          "Passionate Flutter developer with 4+ years of experience, always exploring the latest advancements in the Flutter ecosystem. I focus on building scalable, high-performance apps with clean architecture and future-proof solutions.",
                           style: textTheme.titleMedium,
                           // softWrap: true,
                         )
@@ -100,9 +101,9 @@ class AboutMe extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(width: context.width * 0.05),
+        SizedBox(width: context.width * 0.03),
         const Myphoto(),
-        SizedBox(width: context.width * 0.12)
+        SizedBox(width: context.width * 0.11)
       ],
     );
   }
