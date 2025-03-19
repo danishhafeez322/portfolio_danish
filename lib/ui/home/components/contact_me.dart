@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio_danish/utils/app_extentions.dart';
 import 'package:portfolio_danish/utils/app_strings.dart';
 import 'package:portfolio_danish/utils/app_theme.dart';
+import 'package:portfolio_danish/widgets/contact_form.dart';
 import 'package:portfolio_danish/widgets/custom_textfield.dart';
 import 'package:universal_html/html.dart' as html;
 
@@ -64,7 +65,7 @@ class _ContactMeState extends State<ContactMe> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Expanded(child: _buildInfoSection(textTheme)),
-        Expanded(child: _buildFormSection(textTheme)),
+        const Expanded(child: ContactForm()),
       ],
     );
   }
@@ -74,10 +75,10 @@ class _ContactMeState extends State<ContactMe> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildInfoSection(textTheme),
-        SizedBox(height: 20),
-        Divider(color: Colors.white),
-        SizedBox(height: 20),
-        _buildFormSection(textTheme),
+        const SizedBox(height: 20),
+        const Divider(color: Colors.white),
+        const SizedBox(height: 20),
+        const ContactForm(),
       ],
     );
   }
@@ -93,12 +94,12 @@ class _ContactMeState extends State<ContactMe> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "I'm just a click away.",
           style: textTheme.titleSmall?.copyWith(color: PortfolioAppTheme.white),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Wrap(
           alignment: WrapAlignment.center,
           spacing: 10,
@@ -122,57 +123,57 @@ class _ContactMeState extends State<ContactMe> {
     );
   }
 
-  Widget _buildFormSection(TextTheme textTheme) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          Text("Fill it out:", style: textTheme.titleMedium),
-          SizedBox(height: 10),
-          CustomTextField(
-            hintText: 'Your Name',
-            controller: nameController,
-            validator: (value) => value == null || value.isEmpty
-                ? 'Please enter your name'
-                : null,
-          ),
-          SizedBox(height: 10),
-          CustomTextField(
-            hintText: 'Email',
-            controller: emailController,
-            validator: (value) =>
-                value == null || value.isEmpty ? 'Please enter email' : null,
-          ),
-          SizedBox(height: 10),
-          CustomTextField(
-            hintText: 'Subject & Description',
-            controller: subjectController,
-            maxLines: 4,
-            validator: (value) =>
-                value == null || value.isEmpty ? 'Please enter subject' : null,
-          ),
-          SizedBox(height: 10),
-          SizedBox(
-            width: 200,
-            child: OutlinedButton(
-              onPressed: () {},
-              style: OutlinedButton.styleFrom(
-                backgroundColor: PortfolioAppTheme.nameColor,
-                side: const BorderSide(color: PortfolioAppTheme.nameColor),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4)),
-              ),
-              child: Text(
-                'Submit',
-                style: textTheme.titleSmall!
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.w700),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildFormSection(TextTheme textTheme) {
+  //   return Form(
+  //     key: _formKey,
+  //     child: Column(
+  //       children: [
+  //         Text("Fill it out:", style: textTheme.titleMedium),
+  //         SizedBox(height: 10),
+  //         CustomTextField(
+  //           hintText: 'Your Name',
+  //           controller: nameController,
+  //           validator: (value) => value == null || value.isEmpty
+  //               ? 'Please enter your name'
+  //               : null,
+  //         ),
+  //         SizedBox(height: 10),
+  //         CustomTextField(
+  //           hintText: 'Email',
+  //           controller: emailController,
+  //           validator: (value) =>
+  //               value == null || value.isEmpty ? 'Please enter email' : null,
+  //         ),
+  //         SizedBox(height: 10),
+  //         CustomTextField(
+  //           hintText: 'Subject & Description',
+  //           controller: subjectController,
+  //           maxLines: 4,
+  //           validator: (value) =>
+  //               value == null || value.isEmpty ? 'Please enter subject' : null,
+  //         ),
+  //         SizedBox(height: 10),
+  //         SizedBox(
+  //           width: 200,
+  //           child: OutlinedButton(
+  //             onPressed: () {},
+  //             style: OutlinedButton.styleFrom(
+  //               backgroundColor: PortfolioAppTheme.nameColor,
+  //               side: const BorderSide(color: PortfolioAppTheme.nameColor),
+  //               shape: RoundedRectangleBorder(
+  //                   borderRadius: BorderRadius.circular(4)),
+  //             ),
+  //             child: Text(
+  //               'Submit',
+  //               style: textTheme.titleSmall!
+  //                   .copyWith(color: Colors.white, fontWeight: FontWeight.w700),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void gotoUrl(String platform) {
     html.window.open(platform, '_blank');

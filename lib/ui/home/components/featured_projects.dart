@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_danish/utils/app_extentions.dart';
+import 'package:portfolio_danish/utils/app_theme.dart';
 
-import '../../../utils/app_theme.dart';
-
-class FeatureProjects extends StatelessWidget {
+class FeatureProjects extends StatefulWidget {
   const FeatureProjects({super.key});
 
   @override
+  State<FeatureProjects> createState() => _FeatureProjectsState();
+}
+
+class _FeatureProjectsState extends State<FeatureProjects> {
+  int hoveredIndex = -1;
+
+  final projects = [
+    {
+      'image': 'assets/imgs/fitness_challenge.png',
+      'title': 'Fitness Challenge App',
+      'github': 'https://github.com/yourprofile/fitness-challenge'
+    },
+    {
+      'image': 'assets/imgs/snaptik_video_downloader.jpg',
+      'title': 'SnapTik Video Downloader',
+      'github': 'https://github.com/yourprofile/snaptik-downloader'
+    },
+    {
+      'image': 'assets/imgs/fitness_challenge.png',
+      'title': 'Another Cool Project',
+      'github': 'https://github.com/yourprofile/another-project'
+    },
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    final imgList = [
-      'assets/imgs/fitness_challenge.png',
-      'assets/imgs/snaptik_video_downloader.jpg',
-      'assets/imgs/fitness_challenge.png'
-    ];
     final textTheme = Theme.of(context).textTheme;
+    bool isMobile = context.width < 600;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.width * 0.05),
       child: Column(
@@ -28,53 +49,89 @@ class FeatureProjects extends StatelessWidget {
           ),
           SizedBox(height: context.height * 0.03),
           GridView.builder(
-            itemCount: 3,
+            itemCount: projects.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: context.width > 456 ? 3 : 1,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 10,
+              crossAxisCount: isMobile ? 1 : 3,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: isMobile ? 1.2 : 1.0,
             ),
-            itemBuilder: (context, index) => Container(
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
+            itemBuilder: (context, index) {
+              final project = projects[index];
+              return MouseRegion(
+                onEnter: (_) => setState(() => hoveredIndex = index),
+                onExit: (_) => setState(() => hoveredIndex = -1),
+                child: AnimatedScale(
+                  scale: hoveredIndex == index ? 1.05 : 1.0,
+                  duration: const Duration(milliseconds: 200),
+                  child: _buildProjectCard(
+                    project['image']!,
+                    project['title']!,
+                    project['github']!,
+                    textTheme,
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProjectCard(
+      String image, String title, String github, TextTheme textTheme) {
+    return GestureDetector(
+      onTap: () {
+        debugPrint('Opening: $github');
+      },
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 3,
+              child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12)),
+                child: Image.asset(
+                  image,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Flexible(
-                    flex: 2,
-                    fit: FlexFit.tight,
-                    child: Image.asset(
-                      width: double.infinity,
-                      imgList[index],
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(height: context.height * 0.005),
-                  FittedBox(
-                    child: Text("Fitness Challenge App",
-                        style: textTheme.titleSmall),
-                  ),
-                  SizedBox(height: context.height * 0.005),
+                  Text(title,
+                      style: textTheme.titleMedium!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      )),
+                  const SizedBox(height: 6),
                   SizedBox(
-                    height: context.height * 0.037,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          foregroundColor: PortfolioAppTheme.nameColor),
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
                       onPressed: () {},
-                      child: const FittedBox(
-                        child: Text("Github Link"),
+                      icon: const Icon(Icons.code, size: 18),
+                      label: const Text("View on GitHub"),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: PortfolioAppTheme.nameColor,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
