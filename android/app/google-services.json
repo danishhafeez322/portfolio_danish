@@ -1,52 +1,13 @@
 {
   "project_info": {
-    "project_number": "880915329215",
-    "firebase_url": "https://all-in-one-d772a-default-rtdb.firebaseio.com",
-    "project_id": "all-in-one-d772a",
-    "storage_bucket": "all-in-one-d772a.firebasestorage.app"
+    "project_number": "914590044736",
+    "project_id": "portfolio-61271",
+    "storage_bucket": "portfolio-61271.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:880915329215:android:a511c426ef392b0b00160a",
-        "android_client_info": {
-          "package_name": "com.autosmarttech.lnpsdev"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAwq3TG4gUdww5skiFXr7Ha1O4Hp7rLIvE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:880915329215:android:38eb9b7406c2eae100160a",
-        "android_client_info": {
-          "package_name": "com.example.general_app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAwq3TG4gUdww5skiFXr7Ha1O4Hp7rLIvE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:880915329215:android:2c2c8c3cc1cf230e00160a",
+        "mobilesdk_app_id": "1:914590044736:android:3d055492552d32618a85a5",
         "android_client_info": {
           "package_name": "com.example.portfolio_danish"
         }
@@ -54,26 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAwq3TG4gUdww5skiFXr7Ha1O4Hp7rLIvE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:880915329215:android:3f707ac642ec37d000160a",
-        "android_client_info": {
-          "package_name": "com.example.test_project"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAwq3TG4gUdww5skiFXr7Ha1O4Hp7rLIvE"
+          "current_key": "AIzaSyCPgN-akeCz998ahUo0_czgH4FWch3Tkts"
         }
       ],
       "services": {

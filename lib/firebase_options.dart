@@ -47,32 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCujhn62_7QnE17qjGUWbKDA9UWpNURGA4',
-    appId: '1:880915329215:web:a36ceb79b703719600160a',
-    messagingSenderId: '880915329215',
-    projectId: 'all-in-one-d772a',
-    authDomain: 'all-in-one-d772a.firebaseapp.com',
-    databaseURL: 'https://all-in-one-d772a-default-rtdb.firebaseio.com',
-    storageBucket: 'all-in-one-d772a.firebasestorage.app',
-    measurementId: 'G-BG78KEMY3K',
+    apiKey: 'AIzaSyAlP7q48BVs0XDSaZcqaIQNDJbdSLKcwB8',
+    appId: '1:914590044736:web:0312ba178faf1a718a85a5',
+    messagingSenderId: '914590044736',
+    projectId: 'portfolio-61271',
+    authDomain: 'portfolio-61271.firebaseapp.com',
+    storageBucket: 'portfolio-61271.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAwq3TG4gUdww5skiFXr7Ha1O4Hp7rLIvE',
-    appId: '1:880915329215:android:2c2c8c3cc1cf230e00160a',
-    messagingSenderId: '880915329215',
-    projectId: 'all-in-one-d772a',
-    databaseURL: 'https://all-in-one-d772a-default-rtdb.firebaseio.com',
-    storageBucket: 'all-in-one-d772a.firebasestorage.app',
+    apiKey: 'AIzaSyCPgN-akeCz998ahUo0_czgH4FWch3Tkts',
+    appId: '1:914590044736:android:3d055492552d32618a85a5',
+    messagingSenderId: '914590044736',
+    projectId: 'portfolio-61271',
+    storageBucket: 'portfolio-61271.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDa0W0JVACmryCO9355WXH9aOFQ1bzXlQw',
-    appId: '1:880915329215:ios:25972e3ac09ced3b00160a',
-    messagingSenderId: '880915329215',
-    projectId: 'all-in-one-d772a',
-    databaseURL: 'https://all-in-one-d772a-default-rtdb.firebaseio.com',
-    storageBucket: 'all-in-one-d772a.firebasestorage.app',
+    apiKey: 'AIzaSyC1uy16VUzInQ0dK76adBB7HH6xjk5t2mE',
+    appId: '1:914590044736:ios:d41c87ce2bfe0a8d8a85a5',
+    messagingSenderId: '914590044736',
+    projectId: 'portfolio-61271',
+    storageBucket: 'portfolio-61271.firebasestorage.app',
     iosBundleId: 'com.example.portfolioDanish',
   );
+
 }
