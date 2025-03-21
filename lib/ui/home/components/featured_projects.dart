@@ -191,34 +191,117 @@ class _FeatureProjectsState extends State<FeatureProjects> {
 
   void _showProjectPopup(
       BuildContext context, String title, String description, String videoUrl) {
+    final isMobile = context.width < 600;
+
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        return Dialog(
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          title:
-              Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-          content: SingleChildScrollView(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: isMobile ? context.width * 0.95 : 800,
+              maxHeight: context.height * 0.9,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(description),
-                const SizedBox(height: 10),
-                if (videoUrl.isNotEmpty)
-                  SizedBox(
-                    height: 200,
-                    child: BuildVideoPlayer(videoUrl),
+                // Header with close button
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: PortfolioAppTheme.nameColor.withOpacity(0.1),
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(20)),
                   ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: isMobile ? 20 : 24,
+                            fontWeight: FontWeight.bold,
+                            color: PortfolioAppTheme.nameColor,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.pop(context),
+                        color: PortfolioAppTheme.nameColor,
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Content
+                Flexible(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (videoUrl.isNotEmpty) ...[
+                          // Video Player
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: BuildVideoPlayer(videoUrl),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                        ],
+
+                        // Description
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Project Description',
+                                style: TextStyle(
+                                  fontSize: isMobile ? 18 : 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: PortfolioAppTheme.nameColor,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                description,
+                                style: TextStyle(
+                                  fontSize: isMobile ? 14 : 16,
+                                  height: 1.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Close"),
-            ),
-          ],
         );
       },
     );
@@ -228,50 +311,203 @@ class _FeatureProjectsState extends State<FeatureProjects> {
 class BuildVideoPlayer extends StatefulWidget {
   final String videoUrl;
 
-  const BuildVideoPlayer(this.videoUrl, {Key? key}) : super(key: key);
+  const BuildVideoPlayer(this.videoUrl, {super.key});
 
   @override
-  State<BuildVideoPlayer> createState() => _BuildVideoPlayerState();
+  _BuildVideoPlayerState createState() => _BuildVideoPlayerState();
 }
 
 class _BuildVideoPlayerState extends State<BuildVideoPlayer> {
-  late YoutubePlayerController _controller;
-  bool _hasError = false;
+  YoutubePlayerController? _controller;
+  bool _isLoading = true;
+  String? _error;
 
   @override
   void initState() {
     super.initState();
+    _initializeVideo();
+  }
 
-    String? videoId = YoutubePlayerController.convertUrlToId(widget.videoUrl);
-    if (videoId == null) {
-      setState(() => _hasError = true);
-      return;
+  Future<void> _initializeVideo() async {
+    try {
+      print('Attempting to load video URL: ${widget.videoUrl}');
+      final videoId = _extractVideoId(widget.videoUrl);
+      print('Extracted video ID: $videoId');
+
+      if (videoId == null) {
+        setState(() {
+          _error = "Invalid YouTube URL";
+          _isLoading = false;
+        });
+        return;
+      }
+
+      // Create controller with more specific parameters
+      // _controller = YoutubePlayerController(
+      //   params: const YoutubePlayerParams(
+      //     showControls: true,
+      //     showFullscreenButton: true,
+      //     enableCaption: true,
+      //     mute: false,
+      //     strictRelatedVideos: true,
+      //     playsInline: true,
+      //   ),
+      // );
+
+      _controller = YoutubePlayerController.fromVideoId(
+        videoId: videoId,
+        autoPlay: false,
+        params: const YoutubePlayerParams(showFullscreenButton: true),
+      );
+      print('Loading video with ID: $videoId');
+
+      // Always construct a proper watch URL
+      final watchUrl = 'https://www.youtube.com/watch?v=$videoId';
+      print('Using watch URL: $watchUrl');
+
+      // try {
+      //   // Load the video using the constructed watch URL
+      //   await _controller!.loadVideo(watchUrl);
+      //   print('Video loaded successfully');
+      // } catch (loadError) {
+      //   print('Error loading video: $loadError');
+      //   setState(() {
+      //     _error = "Failed to load video. Please try again.";
+      //     _isLoading = false;
+      //   });
+      //   return;
+      // }
+
+      // Wait a bit for the player to initialize
+      await Future.delayed(const Duration(milliseconds: 500));
+      print('Player initialization complete');
+
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error initializing video: $e');
+      setState(() {
+        _error = "Failed to load video: $e";
+        _isLoading = false;
+      });
     }
-
-    _controller = YoutubePlayerController(
-      params: const YoutubePlayerParams(
-        showControls: true,
-        showFullscreenButton: true,
-      ),
-    )..cueVideoById(videoId: videoId);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_hasError) {
+    if (_isLoading) {
       return const Center(
-        child: Text(
-          "❌ Error: Invalid YouTube URL.\nPlease check the link.",
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.red, fontSize: 16),
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    if (_error != null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error_outline, color: Colors.red, size: 48),
+            const SizedBox(height: 8),
+            Text(_error!, style: const TextStyle(color: Colors.red)),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _isLoading = true;
+                  _error = null;
+                });
+                _initializeVideo();
+              },
+              child: const Text('Retry'),
+            ),
+          ],
         ),
       );
     }
 
-    return SizedBox(
-      height: 200,
-      width: double.infinity,
-      child: YoutubePlayer(controller: _controller),
+    if (_controller == null) {
+      return const Center(child: Text("Invalid YouTube URL"));
+    }
+
+    return YoutubePlayerScaffold(
+      controller: _controller!,
+      builder: (context, player) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Stack(
+            children: [
+              player,
+              // Add a loading overlay
+              if (_isLoading)
+                Container(
+                  color: Colors.black.withOpacity(0.5),
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
     );
+  }
+
+  @override
+  void dispose() {
+    _controller?.close();
+    super.dispose();
+  }
+
+  /// Extracts the YouTube video ID from a given URL, including Shorts.
+  String? _extractVideoId(String url) {
+    print('Extracting video ID from URL: $url');
+    Uri? uri = Uri.tryParse(url);
+    if (uri == null) {
+      print('Failed to parse URL');
+      return null;
+    }
+
+    print('Parsed URI: $uri');
+    print('Path segments: ${uri.pathSegments}');
+
+    // Check for 'v' parameter in YouTube URLs (standard YouTube link)
+    if (uri.queryParameters.containsKey('v')) {
+      print('Found video ID in query parameters: ${uri.queryParameters['v']}');
+      return uri.queryParameters['v'];
+    }
+
+    // Handle shortened URLs (youtu.be/VIDEO_ID)
+    if (uri.host.contains('youtu.be')) {
+      print('Found youtu.be URL');
+      return uri.pathSegments.isNotEmpty ? uri.pathSegments.first : null;
+    }
+
+    // Handle embedded URLs (youtube.com/embed/VIDEO_ID)
+    if (uri.pathSegments.contains('embed')) {
+      print('Found embed URL');
+      int embedIndex = uri.pathSegments.indexOf('embed');
+      if (embedIndex != -1 && embedIndex + 1 < uri.pathSegments.length) {
+        return uri.pathSegments[embedIndex + 1];
+      }
+    }
+
+    // Handle Shorts URLs (youtube.com/shorts/VIDEO_ID)
+    if (uri.pathSegments.contains('shorts')) {
+      print('Found Shorts URL');
+      int shortsIndex = uri.pathSegments.indexOf('shorts');
+      if (shortsIndex != -1 && shortsIndex + 1 < uri.pathSegments.length) {
+        String videoId = uri.pathSegments[shortsIndex + 1];
+        // Remove any query parameters from the video ID
+        videoId = videoId.split('?')[0];
+        print('Extracted Shorts video ID: $videoId');
+        return videoId;
+      }
+    }
+
+    print('No valid video ID found in URL');
+    return null;
   }
 }
