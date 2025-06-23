@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio_danish/utils/app_extentions.dart';
 import 'package:portfolio_danish/utils/app_theme.dart';
@@ -16,11 +18,11 @@ class _MyphotoState extends State<Myphoto> with TickerProviderStateMixin {
   late AnimationController _controller2;
   late final Animation<AlignmentGeometry> _alignAnimation;
   late Animation sizeAnimation;
-
+  String? photoUrl;
   @override
   void initState() {
     super.initState();
-
+    fetchPhoto();
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 4));
 
@@ -46,6 +48,22 @@ class _MyphotoState extends State<Myphoto> with TickerProviderStateMixin {
         curve: Curves.easeInOutCubic,
       ),
     );
+  }
+
+  void fetchPhoto() async {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    try {
+      await remoteConfig.fetchAndActivate();
+      final photoUrl = remoteConfig.getString('portfolio_photo');
+      if (photoUrl.isNotEmpty) {
+        setState(() {
+          this.photoUrl = photoUrl;
+          // Update the state with the fetched photo URL
+        });
+      }
+    } catch (e) {
+      print("Error fetching remote config: $e");
+    }
   }
 
   @override
@@ -89,10 +107,17 @@ class _MyphotoState extends State<Myphoto> with TickerProviderStateMixin {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.black.withOpacity(0.8),
-              image: const DecorationImage(
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(context.width * 0.2),
+              child: CachedNetworkImage(
+                imageUrl: photoUrl ?? '',
                 fit: BoxFit.cover,
-                alignment: Alignment.bottomLeft,
-                image: AssetImage('assets/imgs/danish_grey_bg.png'),
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                errorWidget: (context, url, error) =>
+                    Image.asset('assets/imgs/danish_pic.png'),
               ),
             ),
           ),
