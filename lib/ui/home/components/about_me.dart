@@ -49,7 +49,7 @@ class AboutMe extends StatelessWidget {
                     speed: const Duration(milliseconds: 120),
                   ),
                   TyperAnimatedText(
-                    "A UI/UX Designer",
+                    "A iOS App Developer",
                     textStyle: textTheme.titleMedium,
                     speed: const Duration(milliseconds: 100),
                   ),

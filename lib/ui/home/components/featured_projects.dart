@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:portfolio_danish/utils/app_extentions.dart';
 import 'package:portfolio_danish/utils/app_theme.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
@@ -168,18 +167,18 @@ class _FeatureProjectsState extends State<FeatureProjects> {
                         fontWeight: FontWeight.w600,
                       )),
                   const SizedBox(height: 6),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () => launchUrl(Uri.parse(github)),
-                      icon: const Icon(Icons.code, size: 18),
-                      label: const Text("View on GitHub"),
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: PortfolioAppTheme.nameColor,
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: ElevatedButton.icon(
+                  //     onPressed: () => launchUrl(Uri.parse(github)),
+                  //     icon: const Icon(Icons.code, size: 18),
+                  //     label: const Text("View on GitHub"),
+                  //     style: ElevatedButton.styleFrom(
+                  //       foregroundColor: Colors.white,
+                  //       backgroundColor: PortfolioAppTheme.nameColor,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

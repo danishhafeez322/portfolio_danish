@@ -114,7 +114,9 @@ class _ContactMeState extends State<ContactMe> {
             ),
             IconButton(
               icon: const Icon(FontAwesomeIcons.upwork, color: Colors.green),
-              onPressed: () {},
+              onPressed: () {
+                gotoUrl(AppStrings.upwork);
+              },
             ),
           ],
         ),
