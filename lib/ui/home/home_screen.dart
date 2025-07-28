@@ -100,15 +100,17 @@ class _HomeBodyState extends State<HomeBody> {
       },
       child: Stack(
         children: [
-          CustomPaint(
-            size: Size.infinite,
-            painter: BackgroundPainter(),
+          Positioned.fill(
+            child: CustomPaint(
+              painter: BackgroundPainter(),
+            ),
           ),
           Container(
             width: context.width,
             height: context.height,
-            padding: EdgeInsets.all(context.width * 0.04),
-            color: PortfolioAppTheme.primary,
+            padding: EdgeInsets.symmetric(
+                horizontal: context.width * 0.04,
+                vertical: context.height * 0.02),
             child: SingleChildScrollView(
               controller: _controller,
               child: Column(

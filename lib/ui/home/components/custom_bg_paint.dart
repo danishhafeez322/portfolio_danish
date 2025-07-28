@@ -5,7 +5,7 @@ import 'package:portfolio_danish/utils/app_theme.dart';
 class BackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    const baseColor = PortfolioAppTheme.primary;
+    const baseColor = PortfolioAppTheme.greyButtonColor;
 
     final lightPaint = Paint()..color = baseColor.withOpacity(0.10);
     final mediumPaint = Paint()..color = baseColor.withOpacity(0.18);

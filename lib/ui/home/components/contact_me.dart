@@ -14,7 +14,6 @@ class ContactMe extends StatefulWidget {
 }
 
 class _ContactMeState extends State<ContactMe> {
-  final _formKey = GlobalKey();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final subjectController = TextEditingController();

@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:portfolio_danish/utils/app_strings.dart';
 import 'package:portfolio_danish/widgets/custom_textfield.dart';
 import 'package:portfolio_danish/utils/app_theme.dart';
