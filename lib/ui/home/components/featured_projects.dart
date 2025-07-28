@@ -64,6 +64,26 @@ class _FeatureProjectsState extends State<FeatureProjects> {
     }
   }
 
+  /// Converts a Google Drive share link to a direct image URL.
+  String convertGoogleDriveLinkToDirectImageUrl(String originalLink) {
+    final uri = Uri.tryParse(originalLink);
+
+    if (uri == null || !uri.path.contains("/d/")) {
+      return originalLink; // fallback to original if not a Google Drive link
+    }
+
+    final parts = uri.path.split('/');
+    final fileIdIndex = parts.indexOf('d') + 1;
+
+    if (fileIdIndex == 0 || fileIdIndex >= parts.length) {
+      return originalLink; // fallback to original if file ID not found
+    }
+
+    final fileId = parts[fileIdIndex];
+
+    return 'https://drive.google.com/uc?export=view&id=$fileId';
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -126,6 +146,8 @@ class _FeatureProjectsState extends State<FeatureProjects> {
 
   Widget _buildProjectCard(String image, String title, String description,
       String github, String videoUrl, TextTheme textTheme) {
+    final imageUrl = convertGoogleDriveLinkToDirectImageUrl(image);
+
     return GestureDetector(
       onTap: () => _showProjectPopup(context, title, description, videoUrl),
       child: Card(
@@ -140,20 +162,23 @@ class _FeatureProjectsState extends State<FeatureProjects> {
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(12)),
                 child: CachedNetworkImage(
-                  imageUrl: image,
+                  imageUrl: imageUrl,
                   width: double.infinity,
                   fit: BoxFit.cover,
                   placeholder: (context, url) => Container(
                     color: Colors.grey[300],
                     child: const Center(child: CircularProgressIndicator()),
                   ),
-                  errorWidget: (context, url, error) => Container(
-                    color: Colors.grey[300],
-                    child: const Center(
-                      child: Icon(Icons.flutter_dash,
-                          size: 50, color: Colors.blue),
-                    ),
-                  ),
+                  errorWidget: (context, url, error) {
+                    log("Error loading image: $error");
+                    return Container(
+                      color: Colors.grey[300],
+                      child: const Center(
+                        child: Icon(Icons.flutter_dash,
+                            size: 50, color: Colors.blue),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -325,6 +350,25 @@ class _BuildVideoPlayerState extends State<BuildVideoPlayer> {
   void initState() {
     super.initState();
     _initializeVideo();
+  }
+
+  String convertGoogleDriveLinkToDirectImageUrl(String originalLink) {
+    final uri = Uri.tryParse(originalLink);
+
+    if (uri == null || !uri.path.contains("/d/")) {
+      throw FormatException("Invalid Google Drive link format.");
+    }
+
+    final parts = uri.path.split('/');
+    final fileIdIndex = parts.indexOf('d') + 1;
+
+    if (fileIdIndex == 0 || fileIdIndex >= parts.length) {
+      throw FormatException("File ID not found in the link.");
+    }
+
+    final fileId = parts[fileIdIndex];
+
+    return 'https://drive.google.com/uc?export=view&id=$fileId';
   }
 
   Future<void> _initializeVideo() async {
