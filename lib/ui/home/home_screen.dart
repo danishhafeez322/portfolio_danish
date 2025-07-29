@@ -9,7 +9,6 @@ import 'package:portfolio_danish/widgets/vertical_headers.dart';
 
 import 'components/about_me.dart';
 import 'components/contact_me.dart';
-import 'components/custom_bg_paint.dart';
 import 'components/featured_projects.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -108,18 +107,7 @@ class _HomeBodyState extends State<HomeBody> {
               controller: _controller,
               child: Column(
                 children: [
-                  Stack(
-                    key: aboutMeKey,
-                    children: [
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: BackgroundPainter(),
-                        ),
-                      ),
-                      SizedBox(height: 0.08 * context.height),
-                      const AboutMe(),
-                    ],
-                  ),
+                  AboutMe(key: aboutMeKey),
                   SizedBox(height: context.height * 0.09),
                   FeatureProjects(key: featuredProjectsKey),
                   SizedBox(height: context.height * 0.09),

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider<HomeBloc>(
       create: (_) => HomeBloc(),
       child: MaterialApp(
-        title: 'Portfolio App',
+        title: 'Danish\'s Portfolio',
         debugShowCheckedModeBanner: false,
         theme: PortfolioAppTheme.baseTheme(),
         initialRoute: HomeScreen.routeName,
