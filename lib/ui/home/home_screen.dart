@@ -100,23 +100,26 @@ class _HomeBodyState extends State<HomeBody> {
       },
       child: Stack(
         children: [
-          Positioned.fill(
-            child: CustomPaint(
-              painter: BackgroundPainter(),
-            ),
-          ),
           Container(
             width: context.width,
             height: context.height,
-            padding: EdgeInsets.symmetric(
-                horizontal: context.width * 0.04,
-                vertical: context.height * 0.02),
+            padding: EdgeInsets.symmetric(vertical: context.height * 0.02),
             child: SingleChildScrollView(
               controller: _controller,
               child: Column(
                 children: [
-                  SizedBox(height: 0.08 * context.height),
-                  AboutMe(key: aboutMeKey),
+                  Stack(
+                    key: aboutMeKey,
+                    children: [
+                      Positioned.fill(
+                        child: CustomPaint(
+                          painter: BackgroundPainter(),
+                        ),
+                      ),
+                      SizedBox(height: 0.08 * context.height),
+                      const AboutMe(),
+                    ],
+                  ),
                   SizedBox(height: context.height * 0.09),
                   FeatureProjects(key: featuredProjectsKey),
                   SizedBox(height: context.height * 0.09),
